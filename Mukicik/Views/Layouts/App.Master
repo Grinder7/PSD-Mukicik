@@ -1,0 +1,104 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="App.Master.cs" Inherits="Mukicik.Views.Layouts.App" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script src="/Scripts/jquery-3.7.1.slim.min.js"></script>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        html, body, #form1 {
+            max-width: 100vw;
+            min-height: 100dvh;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form1" runat="server" class="h-100 d-flex flex-column">
+        <div>
+            <nav class="navbar navbar-expand-lg bg-primary bg-gradient">
+                <div class="container-fluid mx-5">
+                    <asp:LinkButton ID="NavIcon" CssClass="navbar-brand text-white" runat="server" PostBackUrl="~/Views/Pages/Home.aspx" CausesValidation="false">Mukicik</asp:LinkButton>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <asp:LinkButton ID="NavHomeButton" CssClass="nav-link active text-white" runat="server" PostBackUrl="~/Views/Pages/Home.aspx" CausesValidation="false">Home</asp:LinkButton>
+                            </li>
+                            <li class="nav-item">
+                                <%if (Session["user"] == null)
+                                    {%>
+                                <asp:LinkButton ID="NavProductButton" CssClass="nav-link text-white" runat="server" PostBackUrl="~/Views/Pages/ViewProduct.aspx" CausesValidation="false">Product</asp:LinkButton>
+                                <%}
+                                    else
+                                    {%>
+                                <div class="dropdown">
+                                    <button class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Product</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/Views/Pages/ViewProduct.aspx">View</a></li>
+                                        <li><a class="dropdown-item" href="/Views/Pages/Admin/Insert.aspx">Insert</a></li>
+                                        <li><a class="dropdown-item" href="/Views/Pages/Admin/Modify.aspx">Modify</a></li>
+                                    </ul>
+                                </div>
+                                <%} %>
+                            </li>
+                        </ul>
+                        <%if (Session["user"] == null)
+                            { %>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <asp:LinkButton ID="NavRegisterButton" CssClass="nav-link text-white" runat="server" PostBackUrl="~/Views/Pages/Auth/Register.aspx" CausesValidation="false">Register</asp:LinkButton>
+                            </li>
+                            <li class="nav-item">
+                                <asp:LinkButton ID="NavLoginButton" CssClass="nav-link text-white" runat="server" PostBackUrl="~/Views/Pages/Auth/Login.aspx" CausesValidation="false">Login</asp:LinkButton>
+                            </li>
+                        </ul>
+                        <%}
+                            else
+                            {
+                        %>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <asp:Label ID="UserCountLabel" runat="server" Text="" CssClass="nav-link text-white"></asp:Label>
+                            </li>
+                            <li class="nav-item">
+                                <asp:Label ID="DividerLabel" runat="server" Text="|" CssClass="nav-link text-white px-0"></asp:Label>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <button class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hi,
+                                    <asp:Label ID="NavUsernameLabel" runat="server" Text="" CssClass="text-white"></asp:Label>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li></li>
+                                    <li>
+                                        <asp:LinkButton ID="NavLogoutButton" CssClass="dropdown-item" runat="server" CausesValidation="false" OnClick="NavLogoutButton_Click">Logout</asp:LinkButton>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <%} %>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="flex-grow-1 m-3">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <hr class="mx-5" />
+        <footer class="mx-5">
+            <p>&copy; 2016 - Mukicik</p>
+        </footer>
+    </form>
+    <script src="/Scripts/bootstrap.bundle.min.js"></script>
+</body>
+</html>
